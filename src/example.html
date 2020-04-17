@@ -41,10 +41,14 @@
             await signIn(document.getElementById("name").value, document.getElementById("password").value);
             window.location.reload();
         }
+
+        async function clickSources() {
+            document.body.innerText = await (await fetch(location.href)).text();
+        }
     </script>
 </head>
 <body onload="checkUser()">
-<button onclick="document.body.innerText = await (await fetch(location.href)).text();">View sources</button>
+<button onclick="clickSources()">View sources</button>
 <div id="auth" style="display: grid">
     <p>This is an example page</p>
     <input id="name" placeholder="Name"/>
