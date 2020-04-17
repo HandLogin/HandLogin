@@ -55,7 +55,7 @@ function getData(dataName) {
 async function call(action = null, parameters = null, callback = null) {
     // Create the query
     let query = "";
-    for (let key of parameters) {
+    for (let key in parameters) {
         query += "&";
         query += key;
         query += "=";
