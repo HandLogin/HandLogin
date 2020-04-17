@@ -66,7 +66,7 @@ class Base
 class Utility
 {
     // Directory root
-    private const DIRECTORY_ROOT = __DIR__ . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . "files";
+    private const DIRECTORY_ROOT = __DIR__ . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . "files";
 
     // Directory delimiter
     private const DIRECTORY_DELIMITER = ":";
