@@ -5,14 +5,18 @@
 
 let token = localStorage.getItem("token");
 
-function validate() {
-    return call("signUp", {
+function signOut() {
+    localStorage.removeItem("token");
+}
+
+async function validate() {
+    return await call("signUp", {
         app: APP_NAME,
         token: token
     }) === null;
 }
 
-function signUp(name, password) {
+async function signUp(name, password) {
     return call("signUp", {
         app: APP_NAME,
         name: name,
@@ -20,8 +24,8 @@ function signUp(name, password) {
     });
 }
 
-function signIn(name, password) {
-    localStorage.setItem("token", token = call("signIn", {
+async function signIn(name, password) {
+    localStorage.setItem("token", token = await call("signIn", {
         app: APP_NAME,
         name: name,
         password: password
@@ -29,11 +33,7 @@ function signIn(name, password) {
     return token;
 }
 
-function signOut() {
-    localStorage.removeItem("token");
-}
-
-function setData(dataName, dataValue) {
+async function setData(dataName, dataValue) {
     return call("setValue", {
         app: APP_NAME,
         key: dataName,
@@ -42,7 +42,7 @@ function setData(dataName, dataValue) {
     });
 }
 
-function getData(dataName) {
+async function getData(dataName) {
     return call("getValue", {
         app: APP_NAME,
         key: dataName,
@@ -52,7 +52,7 @@ function getData(dataName) {
 
 // Don't touch
 
-async function call(action = null, parameters = null, callback = null) {
+function call(action = null, parameters = null, callback = null) {
     // Create the query
     let query = "";
     for (let key in parameters) {
