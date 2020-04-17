@@ -44,7 +44,7 @@
     </script>
 </head>
 <body onload="checkUser()">
-<button onclick="document.body.parentElement.innerText = document.body.parentElement.innerHTML">View sources</button>
+<button onclick="document.body.innerText = await (await fetch(location.href)).text();">View sources</button>
 <div id="auth" style="display: grid">
     <p>This is an example page</p>
     <input id="name" placeholder="Name"/>
