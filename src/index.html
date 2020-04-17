@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Use HandLogin</title>
+</head>
+<body>
+<h1>HandLogin for Handasaim</h1>
+<p style="font-size: 1vh">Introducing a (somewhat) restful API</p>
+<p>כדי להשתמש במערכת בפרוייקט שלכם:</p>
+<code>
+    &lt;script type="text/javascript" src="http://handlogin.herokuapp.com/scripts/api.js"&gt;&lt;/script&gt;
+    <br/>
+    &lt;script&gt;const APP_NAME = "שם האתר שלכם";&lt;/script&gt;
+</code>
+<p>כדי ליצור משתמש חדש:</p>
+<code>
+    signUp("name", "password");
+</code>
+<p>כדי להיכנס עם המשתמש:</p>
+<code>
+    signUp("name", "password");
+</code>
+<p>כדי לבדוק אם המשתמש מחובר:</p>
+<code>
+    validate();
+</code>
+<p>כדי לכתוב למסד נתונים של המשתמש:</p>
+<code>
+    setData("pet name", "Shocko");
+</code>
+<p>כדי לקרוא ממסד נתונים של משתמש:</p>
+<code>
+    setData("pet name"); // Shocko
+</code>
+</body>
+</html>

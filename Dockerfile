@@ -6,3 +6,5 @@ RUN a2enmod headers
 COPY src /var/www/html
 # Change ownership & permissions of /var/www
 RUN chown www-data /var/www/ -R && chmod 775 /var/www/ -R
+# Heroku
+CMD sed -i "s/80/$PORT/g" /etc/apache2/sites-enabled/000-default.conf /etc/apache2/ports.conf && docker-php-entrypoint apache2-foreground
