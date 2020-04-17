@@ -52,7 +52,7 @@ function getData(dataName) {
 
 // Don't touch
 
-function call(action = null, parameters = null, callback = null) {
+async function call(action = null, parameters = null, callback = null) {
     // Create the query
     let query = "";
     for (let key of parameters) {
@@ -66,7 +66,8 @@ function call(action = null, parameters = null, callback = null) {
     // Log
     console.log("Sending request: " + url);
     // Perform the request
-    let result = await(await fetch(url)).text();
+    let response = await fetch(url);
+    let result = await response.text();
     // Try to parse the result as JSON
     try {
         let API = JSON.parse(result);
