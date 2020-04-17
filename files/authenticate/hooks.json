@@ -1,0 +1,7 @@
+{
+  "validate": true,
+  "signIn": true,
+  "signUp": true,
+  "setValue": true,
+  "getValue": true
+}
