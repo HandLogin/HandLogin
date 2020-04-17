@@ -52,7 +52,7 @@ async function getData(dataName) {
 
 // Don't touch
 
-function call(action = null, parameters = null, callback = null) {
+async function call(action = null, parameters = null, callback = null) {
     // Create the query
     let query = "";
     for (let key in parameters) {
