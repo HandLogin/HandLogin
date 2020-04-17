@@ -10,7 +10,7 @@ function signOut() {
 }
 
 async function validate() {
-    return await call("signUp", {
+    return await call("validate", {
         app: APP_NAME,
         token: token
     }) === null;

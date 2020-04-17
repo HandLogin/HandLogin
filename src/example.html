@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <script type="text/javascript" src="http://handlogin.herokuapp.com/scripts/api.js"></script>
+    <script>const APP_NAME = "example";</script>
+
+    <title>Example</title>
+
+    <script>
+
+        async function checkUser() {
+            let auth = await validate();
+
+            if (auth) {
+                document.body.removeChild(document.getElementById("auth"));
+            } else {
+                document.body.removeChild(document.getElementById("page"));
+            }
+
+            if (auth) {
+                clickLoad();
+            }
+        }
+
+        async function clickLoad() {
+            document.getElementById("pet").value = await getData("pet");
+        }
+
+        async function clickSave() {
+            await setData("pet", document.getElementById("pet").value);
+        }
+
+        async function clickSignUp() {
+            await signUp(document.getElementById("name").value, document.getElementById("password").value);
+            await clickSignIn();
+        }
+
+        async function clickSignIn() {
+            await signIn(document.getElementById("name").value, document.getElementById("password").value);
+            window.location.reload();
+        }
+    </script>
+</head>
+<body onload="checkUser()">
+<button onclick="document.body.parentElement.innerText = document.body.parentElement.innerHTML">View sources</button>
+<div id="auth" style="display: grid">
+    <p>This is an example page</p>
+    <input id="name" placeholder="Name"/>
+    <input id="password" type="password" placeholder="Password"/>
+    <button onclick="clickSignUp()">Create account</button>
+    <button onclick="clickSignIn()">Log in with an existing account</button>
+</div>
+<div id="page" style="display: grid">
+    <p>What is your pet's name?</p>
+    <input id="pet" type="text" placeholder="Pet name"/>
+    <button onload="clickSave()">Save</button>
+</div>
+</body>
+</html>
