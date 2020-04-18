@@ -11,27 +11,42 @@
 <code>
     &lt;script type="text/javascript" src="http://handlogin.herokuapp.com/scripts/api.js"&gt;&lt;/script&gt;
     <br/>
-    &lt;script&gt;const APP_NAME = "שם האתר שלכם";&lt;/script&gt;
+    &lt;script&gt;
+    // Your app name
+    const APP_NAME = "שם האתר שלכם";
+
+    // פונקצייה שמקבלת את התוצאות
+    function resultHere(tag, status, result){
+        // tag - תיאור הפעולה (לדוגמה מצא-שם-חיה)
+        // status - האם הפעולה הצליחה
+        // result - תוצאת הפעולה או שגיאה
+    }
+    &lt;/script&gt;
 </code>
 <p>כדי ליצור משתמש חדש:</p>
 <code>
-    await signUp("name", "password");
+    //     name    password    tag
+    signUp("name", "password", "הירשמות");
 </code>
 <p>כדי להיכנס עם המשתמש:</p>
 <code>
-    await signIn("name", "password");
+    //     name    password    tag
+    signIn("name", "password", "כניסת-משתמש");
 </code>
 <p>כדי לבדוק אם המשתמש מחובר:</p>
 <code>
-    await validate();
+    //       tag
+    validate("בדיקת-משתמש");
 </code>
 <p>כדי לכתוב למסד נתונים של המשתמש:</p>
 <code>
-    await setData("pet name", "Shocko");
+    //      dataName    dataValue tag
+    setData("pet name", "Shocko", "שינוי-שם-חיה");
 </code>
 <p>כדי לקרוא ממסד נתונים של משתמש:</p>
 <code>
-    await getData("pet name"); // Shocko
+    //      dataName    tag
+    getData("pet name", "בדיקת-שם-חיה"); // Shocko
 </code>
 <p>דף לדוגמה:</p>
 <a href="example.html">Example</a>

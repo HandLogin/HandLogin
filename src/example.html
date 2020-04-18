@@ -10,44 +10,56 @@
 
     <script>
 
-        async function checkUser() {
-            let auth = await validate();
-
-            if (auth) {
-                document.body.removeChild(document.getElementById("auth"));
-            } else {
-                document.body.removeChild(document.getElementById("page"));
-            }
-
-            if (auth) {
-                clickLoad();
-            }
+        function clickSave() {
+            setData("pet", document.getElementById("pet").value);
         }
 
-        async function clickLoad() {
-            document.getElementById("pet").value = await getData("pet");
+        function clickSignUp() {
+            signUp(document.getElementById("name").value, document.getElementById("password").value, "signUp");
         }
 
-        async function clickSave() {
-            await setData("pet", document.getElementById("pet").value);
-        }
-
-        async function clickSignUp() {
-            await signUp(document.getElementById("name").value, document.getElementById("password").value);
-            await clickSignIn();
-        }
-
-        async function clickSignIn() {
-            await signIn(document.getElementById("name").value, document.getElementById("password").value);
-            window.location.reload();
+        function clickSignIn() {
+            signIn(document.getElementById("name").value, document.getElementById("password").value, "signIn");
         }
 
         async function clickSources() {
             document.body.innerText = await (await fetch(location.href)).text();
         }
+
+        function resultHere(tag, status, output) {
+            switch (tag) {
+                case "checkUser": {
+                    if (status) {
+                        // Remove the login
+                        document.body.removeChild(document.getElementById("auth"));
+                        // User is logged in
+                        getData("pet", "loadPet");
+                    } else {
+                        // Remove the content
+                        document.body.removeChild(document.getElementById("page"));
+                    }
+                    break;
+                }
+                case "signIn": {
+                    // Refresh the page
+                    window.location.reload();
+                    break;
+                }
+                case "signUp": {
+                    // Sign in now
+                    clickSignIn();
+                    break;
+                }
+                case "loadPet": {
+                    // Set the name
+                    document.getElementById("pet").value = output;
+                    break;
+                }
+            }
+        }
     </script>
 </head>
-<body onload="checkUser()">
+<body onload="validate('checkUser')">
 <button onclick="clickSources()">View sources</button>
 <div id="auth" style="display: grid">
     <p>This is an example page</p>

@@ -9,50 +9,76 @@ function signOut() {
     localStorage.removeItem("token");
 }
 
-async function validate() {
-    return !(await call("validate", {
+// Checks if user is signed in
+function validate(tag = null) {
+    call("validate", {
         app: APP_NAME,
         token: token
-    })).includes(" ");
-}
-
-async function signUp(name, password) {
-    return call("signUp", {
-        app: APP_NAME,
-        name: name,
-        password: password
+    }, tag, (success, result) => {
+        if (success) {
+            console.log("Validate - " + success);
+        }
     });
 }
 
-async function signIn(name, password) {
-    localStorage.setItem("token", token = await call("signIn", {
+// Create user
+function signUp(name, password, tag = null) {
+    call("signUp", {
         app: APP_NAME,
         name: name,
         password: password
-    }));
-    return token;
+    }, tag, (success, result) => {
+        if (success) {
+            console.log("Sign up - " + name + ": " + success);
+        }
+    });
 }
 
-async function setData(dataName, dataValue) {
-    return call("setValue", {
+// Log-in
+function signIn(name, password, tag = null) {
+    call("signIn", {
+        app: APP_NAME,
+        name: name,
+        password: password
+    }, tag, (success, result) => {
+        localStorage.setItem("token", token = result);
+        if (success) {
+            console.log("Sign in - " + name + ": " + success);
+        }
+    });
+}
+
+// Writes data to the user's database
+function setData(dataName, dataValue, tag = null) {
+    call("setValue", {
         app: APP_NAME,
         key: dataName,
         value: dataValue,
         token: token
+    }, tag, (success, result) => {
+        if (success) {
+            console.log("Set data - " + dataName + ": " + dataValue);
+        }
     });
 }
 
-async function getData(dataName) {
-    return call("getValue", {
+// Reads data from the user's database
+function getData(dataName, tag = null) {
+    call("getValue", {
         app: APP_NAME,
         key: dataName,
         token: token
+    }, tag, (success, result) => {
+        if (success) {
+            console.log("Get data - " + dataName + ": " + result);
+        }
     });
 }
 
 // Don't touch
 
-async function call(action = null, parameters = null, callback = null) {
+// Sends a message to the server
+function call(action = null, parameters = null, tag = null, callback = null) {
     // Create the query
     let query = "";
     for (let key in parameters) {
@@ -66,20 +92,17 @@ async function call(action = null, parameters = null, callback = null) {
     // Log
     console.log("Sending request: " + url);
     // Perform the request
-    let response = await fetch(url);
-    let result = await response.text();
-    // Try to parse the result as JSON
-    try {
-        let API = JSON.parse(result);
+    fetch(url).then(response => response.json().then(result => {
         // Check the result's integrity
-        if (API.hasOwnProperty("status") && API.hasOwnProperty("result")) {
+        if (result.hasOwnProperty("status") && result.hasOwnProperty("result")) {
             // Call the callback with the result
-            return API["result"];
-        } else {
-            // Call the callback with an error
-            return "API response malformed";
+            if (callback !== undefined && callback !== null) {
+                callback(result["status"], result["result"]);
+            }
+            // Call result-here
+            if (resultHere !== undefined && resultHere !== null) {
+                resultHere(tag, result["status"], result["result"]);
+            }
         }
-    } catch (ignored) {
-    }
-    return "Error (Unknown)";
+    }));
 }
