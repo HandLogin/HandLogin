@@ -78,7 +78,7 @@ function getData(dataName, callback = null) {
 // Don't touch
 
 // Sends a message to the server
-function call(action = null, parameters = null, callback = null, logback = null) {
+function call(action = null, parameters = null, externalCallback = null, internalCallback = null) {
     // Create the query
     let query = "";
     for (let key in parameters) {
@@ -95,13 +95,13 @@ function call(action = null, parameters = null, callback = null, logback = null)
     fetch(url).then(response => response.json().then(result => {
         // Check the result's integrity
         if (result.hasOwnProperty("status") && result.hasOwnProperty("result")) {
-            // Call the callback with the result
-            if (callback !== undefined && callback !== null) {
-                callback(result["status"], result["result"]);
-            }
             // Call result-here or the passable callback
-            if (logback !== undefined && logback !== null) {
-                logback(result["status"], result["result"]);
+            if (internalCallback !== undefined && internalCallback !== null) {
+                internalCallback(result["status"], result["result"]);
+            }
+            // Call the callback with the result
+            if (externalCallback !== undefined && externalCallback !== null) {
+                externalCallback(result["status"], result["result"]);
             }
         }
     }));
