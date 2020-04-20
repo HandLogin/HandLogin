@@ -101,9 +101,10 @@ function call(action = null, parameters = null, passable = null, callback = null
             }
             // Call result-here or the passable callback
             if (passable !== undefined && passable !== null) {
-                if ((typeof passable).toLowerCase() === typeof "function") {
+                if (typeof passable === typeof (function () {
+                })) {
                     passable(result["status"], result["result"]);
-                }else{
+                } else {
                     if (resultHere !== undefined && resultHere !== null) {
                         resultHere(passable, result["status"], result["result"]);
                     }
