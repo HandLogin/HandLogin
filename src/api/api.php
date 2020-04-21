@@ -121,9 +121,45 @@ class Authenticate
                                         return [false, "Invalid types"];
                                     }
                                     return [false, "Missing parameters"];
+                                } else if ($action === "getUsers") {
+                                    if (isset($parameters->token)) {
+                                        if (is_string($parameters->token)) {
+                                            $userID = self::validate($parameters->token);
+                                            if ($userID[0]) {
+                                                if (isset($parameters->columns)) {
+                                                    if (is_string($parameters->columns)) {
+                                                        // Check admin
+                                                        if (self::$database->get($userID[1], "isAdmin")[1] === "true") {
+                                                            // Columns to read
+                                                            $columns = json_decode($parameters->columns);
+                                                            // List rows
+                                                            $rows = array_slice(scandir(Utility::evaluateFile("rows", Database::API, self::API)), 2);
+                                                            // Users array
+                                                            $array = array();
+                                                            foreach ($rows as $row) {
+                                                                $user = new stdClass();
+                                                                $user->id = $row;
+                                                                foreach ($columns as $column) {
+                                                                    $result = self::$database->get($row, $column);
+                                                                    $user->$column = $result[1];
+                                                                }
+                                                                array_push($array, $user);
+                                                            }
+                                                            return [true, $array];
+                                                        }
+                                                        return [false, "User is not an admin"];
+                                                    }
+                                                    return [false, "Invalid parameters"];
+                                                }
+                                                return [false, "Missing parameters"];
+                                            }
+                                            return $userID;
+                                        }
+                                        return [false, "Invalid parameters"];
+                                    }
+                                    return [false, "Missing parameters"];
                                 }
                                 return [false, "Unhandled hook"];
-
                             }
                             return [false, "Locked hook"];
                         }

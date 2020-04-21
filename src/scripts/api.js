@@ -75,6 +75,36 @@ function getData(dataName, callback = null) {
     });
 }
 
+function setImage(name, input, callback = null) {
+    let file = input.files[0];
+    let fileReader = new FileReader();
+    fileReader.addEventListener("load", function () {
+        // reader.result
+        setData("image_" + name, fileReader.result, callback);
+    }, false);
+    fileReader.readAsDataURL(file);
+}
+
+function getImage(name, callback = null) {
+    getData("image_" + name, callback);
+}
+
+function getUser(columns = [], callback = null) {
+    call("getUsers", {
+        app: APP_NAME,
+        token: token
+    }, callback, (success, result) => {
+        if (success) {
+            console.log("Get users - ");
+            for (let user of result) {
+                for (let column of columns) {
+                    console.log(user.id + " - " + column + " - " + user[column]);
+                }
+            }
+        }
+    });
+}
+
 // Don't touch
 
 // Sends a message to the server
