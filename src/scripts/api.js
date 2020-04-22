@@ -91,7 +91,8 @@ function getImage(name, callback = null) {
 
 function getUsers(columns = [], callback = null) {
     call("getUsers", {
-        columns: columns,
+        app: APP_NAME,
+        columns: JSON.stringify(columns),
         token: token
     }, callback, (success, result) => {
         if (success) {
