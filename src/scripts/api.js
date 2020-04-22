@@ -89,7 +89,7 @@ function getImage(name, callback = null) {
     getData("image_" + name, callback);
 }
 
-function getUser(columns = [], callback = null) {
+function getUsers(columns = [], callback = null) {
     call("getUsers", {
         app: APP_NAME,
         token: token
