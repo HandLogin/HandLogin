@@ -111,19 +111,27 @@ function getUsers(columns = [], callback = null) {
 // Sends a message to the server
 function call(action = null, parameters = null, externalCallback = null, internalCallback = null) {
     // Create the query
+    let form = new FormData();
     let query = "";
     for (let key in parameters) {
+
         query += "&";
         query += key;
         query += "=";
         query += encodeURIComponent(parameters[key]);
+
+        form.append(key, parameters[key]);
     }
     // Final URL
-    let url = "http://handlogin.herokuapp.com/api/?" + action + query;
+    let minifiedURL = "http://handlogin.herokuapp.com/api/?" + action;
+    let fullURL = minifiedURL + query;
     // Log
-    console.log("Sending request: " + url);
+    console.log("Sending request: " + fullURL);
     // Perform the request
-    fetch(url).then(response => response.json().then(result => {
+    fetch(minifiedURL, {
+        method: "post",
+        body: form
+    }).then(response => response.json().then(result => {
         // Check the result's integrity
         if (result.hasOwnProperty("status") && result.hasOwnProperty("result")) {
             // Call result-here or the passable callback
