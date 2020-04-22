@@ -133,7 +133,7 @@ class Authenticate
                                                             // Columns to read
                                                             $columns = json_decode($parameters->columns);
                                                             // List rows
-                                                            $rows = array_slice(scandir(Utility::evaluateFile("rows", Database::API, self::API)), 2);
+                                                            $rows = array_slice(scandir(Utility::evaluatePath("database:authenticate:rows")), 2);
                                                             // Users array
                                                             $array = array();
                                                             foreach ($rows as $row) {
