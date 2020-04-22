@@ -3,5 +3,6 @@
   "signIn": true,
   "signUp": true,
   "setValue": true,
-  "getValue": true
+  "getValue": true,
+  "getUsers": true
 }
